@@ -1,0 +1,25 @@
+name: Dependencies Example
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Haal de code op
+        uses: actions/checkout@v7
+        
+      - name: Stel Node.js in
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Installeer dependencies
+        run: npm ci
+
+      - name: Toon de bestanden
+        run: ls -alhR
