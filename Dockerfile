@@ -1,10 +1,14 @@
-FROM node:22-bookworm-slim
+FROM node:18
+
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+COPY package*.json /usr/src/app
 
-COPY . .
-ENV PORT=5000
+RUN npm install
+
+COPY . /usr/src/app
+
 EXPOSE 5000
-CMD ["npm", "start"]
+
+CMD [ "npm","start" ]
