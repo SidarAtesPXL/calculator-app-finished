@@ -1,0 +1,34 @@
+name: Build Example
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Haal de code op
+        uses: actions/checkout@v7
+
+      - name: Stel Node.js in
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Installeer dependencies
+        run: npm ci
+
+      - name: Maak de ZIP
+        run: |
+          zip -qr "$RUNNER_TEMP/calculator-app.zip" . \
+            -x '.git/*' '.github/*' '.env' '.env.*'
+          ls -lh "$RUNNER_TEMP/calculator-app.zip"
+
+      - name: Bewaar de ZIP
+        uses: actions/upload-artifact@v7
+        with:
+          path: ${{ runner.temp }}/calculator-app.zip
+          archive: false
