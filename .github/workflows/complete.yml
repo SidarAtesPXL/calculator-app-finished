@@ -44,3 +44,10 @@ jobs:
             junit.xml
             coverage/
           if-no-files-found: error
+
+      - name: Toon het rapport in Summary
+        if: ${{ !cancelled() && (hashFiles('junit.xml') != '' || hashFiles('coverage/clover.xml') != '') }}
+        uses: mridang/action-test-reporter@master
+        with:
+          results-path: junit.xml
+          coverage-path: coverage/clover.xml
