@@ -1,0 +1,17 @@
+name: Checkout Example
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Haal de code op
+        uses: actions/checkout@v7
+
+      - name: Toon de bestanden
+        run: ls -alhR
